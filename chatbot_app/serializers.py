@@ -5,3 +5,6 @@ class CustomerSerializers(serializers.ModelSerializer):
     class Meta:
         model = Customer
         fields = ["id","nama", "nomor_telepon","email","alamat"]
+
+
+        

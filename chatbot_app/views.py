@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from .serializers import CustomerSerializers
 from .models import Customer
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework import status
 
 @csrf_exempt
 @api_view(["POST"])
@@ -31,3 +32,11 @@ def chatbot_serializer(request):
             serializer.save()
             return Response({"success":True, "message":"data customer berhasil disimpan"})
         return Response(serializer.errors, status=400)
+    
+@api_view(['GET'])
+def get_data(request):
+    if request.method == "GET":
+        customers=Customer.objects.all()
+        serializer = CustomerSerializers(customers, many=True)
+        return Response(serializer.data)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
